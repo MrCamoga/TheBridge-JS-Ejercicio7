@@ -27,10 +27,43 @@ function repetirString(str, n) {
 }
 
 function esPrimo(n) {
-	if (n % 2 == 0 || n % 3 == 0) return false;
-	for (let i = 6; i <= Math.sqrt(n); i += 6) {
-		if (n % (i - 1) == 0 || n % (i + 1) == 0) return false;
+	function modpow(x, a, m) {
+		if (a == 0) return 1;
+		let res = 1;
+		while (a != 0) {
+			if (a & 1) res = (res * x) % m;
+			x = x ** 2 % m;
+			a >>= 1;
+		}
+		return res;
 	}
+
+	function trailingZeroes(x) {
+		let d = ~x & (x - 1);
+		let e = 0;
+		while (d != 0) {
+			d >>= 1;
+			e++;
+		}
+		return e;
+	}
+
+	const bases = [2, 3, 5, 7, 11, 13, 17, 19];
+	if (bases.includes(n)) return true;
+	if (n % 2 == 0) return false;
+	let s = trailingZeroes(n - 1);
+	let d = (n - 1) >> s;
+
+	mr: for (let i = 0; i < bases.length; i++) {
+		let x = modpow(bases[i], d, n);
+		if (x == n - 1 || x == 1) continue;
+		for (let j = 1; j <= s; j++) {
+			x = x ** 2 % n;
+			if (x == n - 1) continue mr;
+		}
+		return false;
+	}
+
 	return true;
 }
 
