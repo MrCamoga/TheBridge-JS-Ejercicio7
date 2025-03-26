@@ -27,6 +27,9 @@ function repetirString(str, n) {
 }
 
 function esPrimo(n) {
+	/**
+	* returns x**a % m
+	*/
 	function modpow(x, a, m) {
 		if (a == 0) return 1;
 		let res = 1;
@@ -38,13 +41,17 @@ function esPrimo(n) {
 		return res;
 	}
 
+	/**
+	* returns 2-adic valuation of x, highest power of two that divides x
+	*/
 	function trailingZeroes(x) {
-		let d = ~x & (x - 1);
+		let d = x & ~(x - 1);
 		let e = 0;
-		while (d != 0) {
-			d >>= 1;
-			e++;
-		}
+		if(d&0xffff0000) e+=16;
+		if(d&0xff00ff00) e+=8;
+		if(d&0xf0f0f0f0) e+=4;
+		if(d&0xcccccccc) e+=2;
+		if(d&0xaaaaaaaa) e+=1;
 		return e;
 	}
 
