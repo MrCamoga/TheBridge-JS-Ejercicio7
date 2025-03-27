@@ -57,8 +57,8 @@ function esPrimo(n) {
 
 	const bases = [2, 3, 5, 7, 11, 13, 17, 19];
 	if (bases.includes(n)) return true;
-	if (n % 2 == 0) return false;
-	let s = trailingZeroes(n - 1);
+	if (n % 2 == 0 || n <= 1) return false;
+	let s = trailingZeroes(n-1);
 	let d = (n - 1) >> s;
 
 	mr: for (let i = 0; i < bases.length; i++) {
