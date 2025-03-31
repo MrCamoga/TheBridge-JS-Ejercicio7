@@ -46,13 +46,13 @@ function esPrimo(n) {
 	*/
 	function trailingZeroes(x) {
 		let d = x & ~(x - 1);
-		let e = 0;
-		if(d&0xffff0000) e+=16;
-		if(d&0xff00ff00) e+=8;
-		if(d&0xf0f0f0f0) e+=4;
-		if(d&0xcccccccc) e+=2;
-		if(d&0xaaaaaaaa) e+=1;
-		return e;
+		return (
+			((d & 0xffff0000) != 0) * 16 +
+			((d & 0xff00ff00) != 0) * 8 +
+			((d & 0xf0f0f0f0) != 0) * 4 +
+			((d & 0xcccccccc) != 0) * 2 +
+			((d & 0xaaaaaaaa) != 0)
+		);
 	}
 
 	const bases = [2, 3, 5, 7, 11, 13, 17, 19];
